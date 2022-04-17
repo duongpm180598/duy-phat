@@ -1,0 +1,21 @@
+<c-modal
+  [visible]="visible"
+  [transition]="true"
+  backdrop="static"
+  id="product-modal"
+  alignment="center"
+>
+  <c-modal-header>
+    <h5 cModalTitle>Xóa sản phẩm</h5>
+    <button cButtonClose (click)="handleAction(false)"></button>
+  </c-modal-header>
+  <c-modal-body> Bạn có muốn xóa sản phẩm này không? </c-modal-body>
+  <c-modal-footer>
+    <button cButton color="secondary" (click)="handleAction(false)">
+      Đóng
+    </button>
+    <button cButton color="primary" (click)="handleAction(true)">
+      Xóa sản phẩm
+    </button>
+  </c-modal-footer>
+</c-modal>

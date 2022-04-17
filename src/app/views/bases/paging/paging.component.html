@@ -1,0 +1,40 @@
+<c-row ngPreserveWhitespaces *ngIf="totalPage">
+  <c-pagination align="end" aria-label="Page navigation example">
+    <c-page-item
+      [disabled]="currentPage === 1"
+      (click)="currentPage > 1 ? handeChangePage(1) : null"
+    >
+      <a cPageLink routerLink="./">&laquo;</a>
+    </c-page-item>
+    <c-page-item
+      [disabled]="currentPage === 1"
+      (click)="currentPage > 1 ? handeChangePage(currentPage - 1) : null"
+    >
+      <a cPageLink routerLink="./">&lt;</a>
+    </c-page-item>
+
+    <ng-container *ngFor="let page of paginationArray">
+      <c-page-item
+        [active]="currentPage === page"
+        (click)="currentPage !== page ? handeChangePage(page) : null"
+      >
+        <a cPageLink routerLink="./">{{ page }}</a>
+      </c-page-item>
+    </ng-container>
+
+    <c-page-item
+      [disabled]="currentPage === totalPage"
+      (click)="
+        currentPage < totalPage ? handeChangePage(currentPage + 1) : null
+      "
+    >
+      <a cPageLink routerLink="./">&gt;</a>
+    </c-page-item>
+    <c-page-item
+      [disabled]="currentPage === totalPage"
+      (click)="currentPage < totalPage ? handeChangePage(totalPage) : null"
+    >
+      <a cPageLink routerLink="./">&raquo;</a>
+    </c-page-item>
+  </c-pagination>
+</c-row>

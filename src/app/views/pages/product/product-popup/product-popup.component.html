@@ -1,0 +1,78 @@
+<c-modal
+  [visible]="visible"
+  [transition]="true"
+  backdrop="static"
+  id="product-modal"
+  alignment="center"
+>
+  <c-modal-header>
+    <h5 cModalTitle>Thêm mới sản phẩm</h5>
+    <button cButtonClose (click)="handleAction()"></button>
+  </c-modal-header>
+  <c-modal-body>
+    <form cForm class="row g-3" [formGroup]="form" (submit)="submit(action)">
+      <c-col xs="12">
+        <label cLabel for="inputBarcode">Mã vạch</label>
+        <input
+          cFormControl
+          id="inputBarcode"
+          formControlName="barcode"
+          [disabled]="action === ACTION.EDIT"
+          required
+        />
+        <c-form-feedback [valid]="false">Trường bắt buộc nhập</c-form-feedback>
+      </c-col>
+      <c-col xs="12">
+        <label cLabel for="inputName">Tên sản phẩm</label>
+        <input cFormControl id="inputName" formControlName="name" />
+      </c-col>
+      <c-col md="6">
+        <label cLabel for="inputImportPrice">Giá nhập</label>
+        <input
+          cFormControl
+          id="inputImportPrice"
+          formControlName="importPrice"
+        />
+      </c-col>
+      <c-col md="6">
+        <label cLabel for="inputExportPrice">Giá bán</label>
+        <input
+          cFormControl
+          id="inputExportPrice"
+          formControlName="exportPrice"
+        />
+      </c-col>
+      <c-col md="4">
+        <label cLabel for="inputCategory">Loại sản phẩm</label>
+        <select cSelect id="inputCategory" formControlName="category">
+          <option [value]="null">Chọn...</option>
+          <option *ngFor="let category of categories" [value]="category.name">
+            {{ category.name }}
+          </option>
+        </select>
+      </c-col>
+      <c-col md="4">
+        <label cLabel for="inputUnit">Đơn vị</label>
+        <select cSelect id="inputUnit" formControlName="unit">
+          <option [value]="null">Chọn...</option>
+          <option *ngFor="let unit of units" [value]="unit.title">
+            {{ unit.title }}
+          </option>
+        </select>
+      </c-col>
+      <c-col md="4">
+        <label cLabel for="inputStatus">Trạng thái</label>
+        <select cSelect id="inputStatus" formControlName="status">
+          <option [value]="'1'">Còn hàng</option>
+          <option [value]="'0'">Hết hàng</option>
+        </select>
+      </c-col>
+    </form>
+  </c-modal-body>
+  <c-modal-footer>
+    <button cButton color="secondary" (click)="handleAction()">Đóng</button>
+    <button cButton color="primary" (click)="handleAction()">
+      {{ action === ACTION.CREATE ? "Thêm mới" : "Lưu Thay đổi" }}
+    </button>
+  </c-modal-footer>
+</c-modal>

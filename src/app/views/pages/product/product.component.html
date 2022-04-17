@@ -1,0 +1,78 @@
+<app-toast-bar
+  [visible]="true"
+  [color]="'primary'"
+  [message]="'toast.message'"
+></app-toast-bar>
+<div class="d-flex mb-2 flex-row-reverse">
+  <button cButton color="primary" (click)="handleAction(ACTION.CREATE)">
+    Thêm mới sản phẩm
+  </button>
+</div>
+<c-card>
+  <ngx-loading [show]="loading"></ngx-loading>
+  <c-card-header>Danh sách sản phẩm</c-card-header>
+  <c-card-body>
+    <app-product-popup
+      [visible]="visible"
+      [action]="action"
+      [product]="product"
+      (onActionChange)="onActionChange($event)"
+    ></app-product-popup>
+    <table [striped]="true" cTable>
+      <thead>
+        <tr>
+          <th scope="col">MÃ VẠCH</th>
+          <th scope="col">TÊN SẢN PHẨM</th>
+          <th scope="col">GIÁ NHẬP</th>
+          <th scope="col">GIÁ BÁN</th>
+          <th scope="col">LOẠI SẢN PHẨM</th>
+          <th scope="col">ĐƠN VỊ</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container
+          *ngIf="listProduct && listProduct.data.length !== 0; else noRecord"
+        >
+          <tr *ngFor="let product of listProduct.data">
+            <td>{{ product.barcode }}</td>
+            <td>{{ product.name }}</td>
+            <td align="right">{{ util.addCommas(product.importPrice) }}</td>
+            <td align="right">{{ util.addCommas(product.exportPrice) }}</td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.unit }}</td>
+            <td>
+              <button
+                cButton
+                color="info"
+                cTooltip="Sửa"
+                (click)="handleAction(ACTION.EDIT, product)"
+              >
+                <svg cIcon name="cilPenAlt" size="sm"></svg>
+              </button>
+              <button
+                cButton
+                color="danger"
+                cTooltip="Xóa"
+                (click)="handleAction(ACTION.DELETE, product)"
+              >
+                <svg cIcon name="cilDelete" size="sm"></svg>
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+        <ng-template #noRecord>
+          <tr>
+            <td colspan="7">Danh sách trống.</td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+    <app-paging
+      [total]="listProduct.total"
+      [currentPage]="listProduct.page"
+      [totalPage]="listProduct.totalPage"
+      (changePage)="onChangePage($event)"
+    ></app-paging>
+  </c-card-body>
+</c-card>
